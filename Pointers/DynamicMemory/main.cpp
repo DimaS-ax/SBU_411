@@ -20,6 +20,7 @@ int* insert(int arr[], int& n, const int value, int index);
 int* pop_back(int arr[], int& n);
 
 int** push_row_back(int** arr, int& rows, const int cols);
+void push_col_back(int** arr, const int rows, int& cols);
 
 
 //#define DYNAMIC_MEMORY_1
@@ -109,6 +110,10 @@ void main()
 
 	arr = push_row_back(arr, rows, cols);
 	Print(arr, rows, cols);
+
+	push_col_back(arr, rows, cols);
+	Print(arr, rows, cols);
+
 
 	//1) Сначала удаляем строки:
 	for (int i = 0; i < rows; i++)
@@ -246,4 +251,17 @@ int** push_row_back(int** arr, int& rows, const int cols)
 
 	//6) Возвращаем новый массив на место вывоза:
 	return buffer;
+}
+
+void push_col_back(int** arr, const int rows, int& cols)
+{
+	for (int i = 0; i < rows; i++)
+	{
+		int* buffer = new int[cols + 1];
+		for (int j = 0; j < cols; j++)buffer[j] = arr[i][j];
+		buffer[cols] = 0;
+		delete[] arr[i];
+		arr[i] = buffer;
+	}
+	cols++;
 }
